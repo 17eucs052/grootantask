@@ -1,6 +1,6 @@
 package com.gokulg.training.controller;
 
-import com.gokulg.training.friendsname.FriendsName;
+import com.gokulg.training.friendsdetails.FriendsDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,34 +20,37 @@ public class Controller {
         return "Done";
     }
 
-    FriendsName localVar;
+    FriendsDetails obj;
+
+    HashMap<Integer, Object> friendsDetails;
 
     Controller() {
-        localVar = new FriendsName();
-        localVar.friendsName.put(1, "Raja");
-        localVar.friendsName.put(2, "Ravi");
-        localVar.friendsName.put(3, "Rahul");
-        localVar.friendsName.put(4, "Reena");
-        localVar.friendsName.put(5, "Riya");
+       obj = new FriendsDetails();
+       friendsDetails = new HashMap<Integer, Object>();
+
+       friendsDetails.put(1,new FriendsDetails("Raj",21,"8487874454"));
+       friendsDetails.put(2,new FriendsDetails("Riya",33,"8487877784"));
+       friendsDetails.put(3,new FriendsDetails("Rita",11,"8101074412"));
+       friendsDetails.put(4,new FriendsDetails("Ravi",50,"7845874487"));
+       friendsDetails.put(5,new FriendsDetails("Ram",34,"9987870001"));
+
     }
 
-    @GetMapping("/friendsnames/")
-    public Set<Map.Entry<Integer, String>> printFriendsNames() {
-        return FriendsName.friendsName.entrySet();
+    @GetMapping("/friendsDetails/")
+    public Set<Map.Entry<Integer, Object>> printFriendsNames() {
+        return friendsDetails.entrySet();
     }
 
+    @PostMapping("/addEntry")
 
-    @RequestMapping(value = "/addentry", method = RequestMethod.POST)
-
-    public void addEntry(@RequestBody HashMap<Integer, String> input) {
-        localVar.addFriendsName(input);
+    public void addEntry(@RequestBody HashMap<Integer, Object> input) {
+        friendsDetails.putAll(input);
     }
 
-
-    @RequestMapping(value = "/deleteentry", method = RequestMethod.POST)
+    @PostMapping("/deleteEntry")
 
     public void deleteEntry(@RequestBody int input) {
-        localVar.friendsName.remove(input);
+        friendsDetails.remove(input);
     }
 
 }
