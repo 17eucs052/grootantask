@@ -40,8 +40,9 @@ public class Controller {
     @RequestMapping(value = "/addentry", method = RequestMethod.POST)
 
     public void addEntry(@RequestBody HashMap<Integer, String> input) {
-        localVar.friendsName.putAll(input);
+        localVar.addFriendsName(input);
     }
+
 
     @RequestMapping(value = "/deleteentry", method = RequestMethod.POST)
 
