@@ -45,7 +45,7 @@ public class Controller {
 
     @RequestMapping(value = "/deleteentry", method = RequestMethod.POST)
 
-    public void addEntry(@RequestBody int input) {
+    public void deleteEntry(@RequestBody int input) {
         localVar.friendsName.remove(input);
     }
 
