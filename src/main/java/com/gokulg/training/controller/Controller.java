@@ -1,5 +1,6 @@
 package com.gokulg.training.controller;
 
+import com.gokulg.training.exceptions.KeyAlreadyPresentException;
 import com.gokulg.training.friendsdetails.FriendsDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,13 +39,22 @@ public class Controller {
 
     @GetMapping("/friendsDetails/")
     public Set<Map.Entry<Integer, Object>> printFriendsNames() {
-        return friendsDetails.entrySet();
+            return friendsDetails.entrySet();
     }
 
     @PostMapping("/addEntry")
 
-    public void addEntry(@RequestBody HashMap<Integer, Object> input) {
-        friendsDetails.putAll(input);
+    public void addEntry(@RequestBody HashMap<Integer, Object> input) throws KeyAlreadyPresentException {
+
+        for (Map.Entry mapElement : input.entrySet()){
+            int key =  (int)mapElement.getKey();
+            if(friendsDetails.containsKey(key)==true)
+                throw new KeyAlreadyPresentException("Register Number Already Exists");
+            else {
+                friendsDetails.put(key, mapElement.getValue());
+            }
+        }
+
     }
 
     @PostMapping("/deleteEntry")
@@ -52,5 +62,7 @@ public class Controller {
     public void deleteEntry(@RequestBody int input) {
         friendsDetails.remove(input);
     }
+
+
 
 }
